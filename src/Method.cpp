@@ -9,6 +9,10 @@ std::string Method::Encode(const char *name)
     return Encode(name, strlen(name));
 }
 
+std::string Method::Encode(const std::string &name)
+{
+    return Encode(name.data(), name.size());
+}
 
 std::string Method::Encode(const char *name, size_t size)
 {
@@ -19,6 +23,11 @@ std::string Method::Encode(const char *name, size_t size)
     hash.CalculateDigest( digest, (const byte*) name, size);
     boost::algorithm::hex(digest, digest+4, result.begin());
     return result;
+}
+
+std::string Method::Encode(const std::string &name, const Arguments &args)
+{
+    return Encode(name.data(), name.size(), args);
 }
 
 

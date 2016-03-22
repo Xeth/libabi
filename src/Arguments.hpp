@@ -23,7 +23,7 @@ class Arguments
         void add(bool);
         void add(const uint256_t &);
         void add(const int256_t &);
-        void add(const Decimal &);
+        void add(const decimal_t &);
         void add(const std::string &);
         void add(const char *);
         void add(const unsigned char *, size_t);

@@ -1,15 +1,12 @@
 #pragma once
 
 #include <string>
-#include <boost/multiprecision/cpp_int.hpp>
-#include <boost/multiprecision/cpp_dec_float.hpp>
 #include <boost/algorithm/hex.hpp>
+
+#include "types.hpp"
 
 
 namespace Ethereum{namespace ABI{
-
-using namespace boost::multiprecision;
-typedef boost::multiprecision::cpp_dec_float_100 Decimal;
 
 
 class Serializer
@@ -18,7 +15,7 @@ class Serializer
         std::string serialize(bool);
         std::string serialize(const uint256_t &);
         std::string serialize(const int256_t &);
-        std::string serialize(const Decimal &);
+        std::string serialize(const decimal_t &);
         std::string serialize(const std::string &);
         std::string serialize(const char *);
         std::string serialize(const unsigned char *, size_t);

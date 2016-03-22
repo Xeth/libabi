@@ -33,7 +33,7 @@ void Arguments::add(const int256_t &val)
 }
 
 
-void Arguments::add(const Decimal &val)
+void Arguments::add(const decimal_t &val)
 {
     _fixed += _serializer.serialize(val);
 }

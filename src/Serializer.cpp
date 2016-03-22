@@ -4,9 +4,9 @@
 namespace Ethereum{namespace ABI{
 
 
-std::string Serializer::serialize(const Decimal &val)
+std::string Serializer::serialize(const decimal_t &val)
 {
-    Decimal result = pow(Decimal(2), 128);
+    decimal_t result = pow(decimal_t(2), 128);
     result *= val;
     return serialize(uint256_t(result.str()));
 }

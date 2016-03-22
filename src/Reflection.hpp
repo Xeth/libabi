@@ -18,6 +18,8 @@ class Reflection
         std::string call(const char *, const Arguments &);
         std::string call(const std::string &, const Arguments &);
 
+        std::string call(const char *from, const char *name, const Arguments &);
+        std::string call(const std::string &from, const std::string &name, const Arguments &);
 
     private:
         std::string _address;

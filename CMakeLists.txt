@@ -6,3 +6,4 @@ set(CMAKE_BUILD_TYPE Release)
 
 
 include(${PROJECT_SOURCE_DIR}/cmake/lib.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/examples.cmake)

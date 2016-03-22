@@ -17,30 +17,58 @@ Reflection<Invoker>::Reflection(const std::string &address, const Invoker &invok
 
 
 template<class Invoker>
-std::string Reflection<Invoker>::call(const char *method, const Arguments &args)
+Result Reflection<Invoker>::call(const char *method, const Arguments &args)
 {
-    return _invoker(_address, Method::Encode(method, args));
+    return Result(_invoker.call(_address, Method::Encode(method, args)));
 }
 
 
 template<class Invoker>
-std::string Reflection<Invoker>::call(const std::string &method, const Arguments &args)
+Result Reflection<Invoker>::call(const std::string &method, const Arguments &args)
 {
-    return _invoker(_address, Method::Encode(method, args));
+    return Result(_invoker.call(_address, Method::Encode(method, args)));
 }
 
 
 template<class Invoker>
-std::string Reflection<Invoker>::call(const char *from, const char *method, const Arguments &args)
+Result Reflection<Invoker>::call(const char *from, const char *method, const Arguments &args)
 {
-    return _invoker(from, _address, Method::Encode(method, args));
+    return Result(_invoker.call(from, _address, Method::Encode(method, args)));
 }
 
 
 template<class Invoker>
-std::string Reflection<Invoker>::call(const std::string &from, const std::string &method, const Arguments &args)
+Result Reflection<Invoker>::call(const std::string &from, const std::string &method, const Arguments &args)
 {
-    return _invoker(from, _address, Method::Encode(method, args));
+    return Result(_invoker.call(from, _address, Method::Encode(method, args)));
+}
+
+
+template<class Invoker>
+std::string Reflection<Invoker>::execute(const char *method, const Arguments &args)
+{
+    return _invoker.execute(_address, Method::Encode(method, args));
+}
+
+
+template<class Invoker>
+std::string Reflection<Invoker>::execute(const std::string &method, const Arguments &args)
+{
+    return _invoker.execute(_address, Method::Encode(method, args));
+}
+
+
+template<class Invoker>
+std::string Reflection<Invoker>::execute(const char *from, const char *method, const Arguments &args)
+{
+    return _invoker.execute(from, _address, Method::Encode(method, args));
+}
+
+
+template<class Invoker>
+std::string Reflection<Invoker>::execute(const std::string &from, const std::string &method, const Arguments &args)
+{
+    return _invoker.execute(from, _address, Method::Encode(method, args));
 }
 
 

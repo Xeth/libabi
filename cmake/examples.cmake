@@ -4,7 +4,7 @@ find_package(Boost REQUIRED)
 set(CMAKE_THREAD_PREFER_PTHREAD ON)
 find_package(Threads REQUIRED)
 
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/examples)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR}/examples)
 
 file(GLOB EXAMPLES 
     "examples/*.cpp"

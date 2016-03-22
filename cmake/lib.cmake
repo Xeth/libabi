@@ -1,14 +1,14 @@
 find_package(Boost REQUIRED)
 find_package(CryptoPP REQUIRED)
 
-include(${PROJECT_SOURCE_DIR}/cmake/modules/CopyHeaders.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules/CopyHeaders.cmake)
 
 add_definitions(-DBOOST_PP_VARIADICS)
 
 include_directories(
     ${Boost_INCLUDE_DIRS}
     ${CRYPTOPP_INCLUDE_DIR}
-    ${PROJECT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
 if(NOT MSVC)
@@ -22,5 +22,5 @@ add_library(abi STATIC ${LIBRARY_SOURCES})
 
 CopyHeaders()
 
-install(DIRECTORY ${PROJECT_BINARY_DIR}/include/abi DESTINATION include)
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include/abi DESTINATION include)
 install (TARGETS abi ARCHIVE DESTINATION lib LIBRARY DESTINATION lib RUNTIME DESTINATION bin)

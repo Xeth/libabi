@@ -23,11 +23,14 @@ std::string Decoder::decodeString(const char *input, size_t size) const
         throw std::runtime_error("buffer overlflow");
     }
 
-    std::string result;
-    strSize /= 2;
-    result.resize(strSize.template convert_to<int>());
+    input+=64;
 
-    boost::algorithm::unhex(input+64, input+size, result.begin());
+    std::string result;
+    size_t offset = strSize.template convert_to<size_t>();
+    result.resize(offset);
+    offset*=2;
+
+    boost::algorithm::unhex(input, input+offset, result.begin());
     return result;
 }
 

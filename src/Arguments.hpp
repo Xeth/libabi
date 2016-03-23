@@ -66,16 +66,18 @@ class Arguments
 #define DYNAMIC(data, size) (data, size)
 #define FIXED(data, size) (data, size, FixedArgumentTag())
 
-#define ESCAPE_PREPARED_QUERY_ARG(x) ( x )
-#define PARSE_ARGUMENTS_SEQ_ITEM(r, data, x) BOOST_PP_IF(BOOST_PP_IS_BEGIN_PARENS(x), x, ESCAPE_PREPARED_QUERY_ARG(x))
+#define ESCAPE_ARG(x) ( x )
+#define PARSE_ARGUMENTS_SEQ_ITEM(r, data, x) BOOST_PP_IF(BOOST_PP_IS_BEGIN_PARENS(x), x, ESCAPE_ARG(x))
 #define ARGUMENTS_FROM_SEQ(SEQ) BOOST_PP_SEQ_FOR_EACH(PARSE_ARGUMENTS_SEQ_ITEM, ~, SEQ)
 
-#define ARGUMENTS(...) Arguments() ARGUMENTS_FROM_SEQ(BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))
+#define ARGUMENTS(...) Ethereum::ABI::Arguments() ARGUMENTS_FROM_SEQ(BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))
 
 
 
 
 }}
+
+#define CONTRACT_AGUMENTS Ethereum::ABI::ARGUMENTS
 
 #include "Arguments.ipp"
 

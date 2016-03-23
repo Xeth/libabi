@@ -4,7 +4,7 @@
 namespace Ethereum{namespace ABI{
 
 
-std::string Serializer::serialize(const decimal_t &val)
+std::string Serializer::serialize(const decimal_t &val) const
 {
     decimal_t result = pow(decimal_t(2), 128);
     result *= val;
@@ -12,19 +12,19 @@ std::string Serializer::serialize(const decimal_t &val)
 }
 
 
-std::string Serializer::serialize(const uint256_t &val)
+std::string Serializer::serialize(const uint256_t &val) const
 {
     return serializeNumber(val);
 }
 
 
-std::string Serializer::serialize(const int256_t &val)
+std::string Serializer::serialize(const int256_t &val) const
 {
     return serializeNumber((val<0)?makeTwosComplement(val):val);
 }
 
 
-int256_t Serializer::makeTwosComplement(const int256_t &val)
+int256_t Serializer::makeTwosComplement(const int256_t &val) const
 {
     int256_t result("0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
     result+=val;
@@ -34,7 +34,7 @@ int256_t Serializer::makeTwosComplement(const int256_t &val)
 
 
 template<class Number>
-std::string Serializer::serializeNumber(const Number &val)
+std::string Serializer::serializeNumber(const Number &val) const
 {
     std::string result = val.str(64, std::ios_base::hex);
     size_t padding = 64 - result.size();
@@ -48,7 +48,7 @@ std::string Serializer::serializeNumber(const Number &val)
 }
 
 
-std::string Serializer::serialize(bool val)
+std::string Serializer::serialize(bool val) const
 {
     std::string result = "000000000000000000000000000000000000000000000000000000000000000";
     result += (val?"1":"0");
@@ -56,14 +56,14 @@ std::string Serializer::serialize(bool val)
 }
 
 
-std::string Serializer::serialize(const std::string &val)
+std::string Serializer::serialize(const std::string &val) const
 {
     return serializeDynamicBytes(val.begin(), val.end(), val.size());
 }
 
 
 template<class Iterator>
-std::string Serializer::serializeDynamicBytes(Iterator begin, Iterator end, size_t size)
+std::string Serializer::serializeDynamicBytes(Iterator begin, Iterator end, size_t size) const
 {
     std::string prefix = serialize(uint256_t(size));
     return serializeBytes(begin, end, size, prefix.data(), prefix.size());
@@ -71,7 +71,7 @@ std::string Serializer::serializeDynamicBytes(Iterator begin, Iterator end, size
 
 
 template<class Iterator>
-std::string Serializer::serializeBytes(Iterator begin, Iterator end, size_t size, const char *prefix, size_t prefixSize)
+std::string Serializer::serializeBytes(Iterator begin, Iterator end, size_t size, const char *prefix, size_t prefixSize) const
 {
     size_t strSize = size*2 + prefixSize;
     size_t resultSize = ceil(double(strSize)/64)*64;
@@ -97,20 +97,20 @@ std::string Serializer::serializeBytes(Iterator begin, Iterator end, size_t size
 
 
 
-std::string Serializer::serialize(const char *val)
+std::string Serializer::serialize(const char *val) const
 {
     size_t size = strlen(val);
     return serializeDynamicBytes(val, val+size, size);
 }
 
 
-std::string Serializer::serialize(const unsigned char *buffer, size_t size)
+std::string Serializer::serialize(const unsigned char *buffer, size_t size) const
 {
     return serializeDynamicBytes(buffer, buffer+size, size);
 }
 
 
-std::string Serializer::serializeFixedData(const unsigned char *buffer, size_t size)
+std::string Serializer::serializeFixedData(const unsigned char *buffer, size_t size) const
 {
     return serializeBytes(buffer, buffer+size, size, NULL, 0);
 }

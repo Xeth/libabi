@@ -11,7 +11,12 @@ Result::Result(const std::string &data) :
 
 std::string Result::toString() const
 {
-    return _decoder.decodeString(_value);
+    size_t size = _value.size();
+    if(size<64)
+    {
+        throw std::runtime_error("buffer overflow");
+    }
+    return _decoder.decodeString(_value.data()+64, size-64); //dynamic offset
 }
 
 

@@ -14,7 +14,7 @@ Arguments & Arguments::operator()(const T &val)
 template<size_t size>
 void Arguments::add(const boost::array<unsigned char, size> &val)
 {
-    _fixed += _serializer.serializeFixedData(val.data(), val.size());
+    addFixedVar(_serializer.serializeFixedData(val.data(), val.size()));
 }
 
 
@@ -23,7 +23,7 @@ void Arguments::add(const boost::array<T, size> &val)
 {
     for(typename boost::array<T, size>::iterator it=val.begin(), end=val.end(); it!=end; ++it)
     {
-        _fixed += _serializer.serialize(*it);
+        addFixedVar(_serializer.serialize(*it));
     }
 }
 
@@ -38,11 +38,12 @@ void Arguments::add(const boost::array<std::string, size> &)
 template<class T>
 void Arguments::add(const std::vector<T> &val)
 {
-    _dynamic += _serializer.serialize(uint256_t(val.size()));
+    std::string result = _serializer.serialize(uint256_t(val.size()));
     for(typename std::vector<T>::iterator it=val.begin(), end=val.end(); it!=end; ++it)
     {
-        _dynamic += _serializer.serialize(*it);
+        result += _serializer.serialize(*it);
     }
+    addDynamicVar(result);
 }
 
 

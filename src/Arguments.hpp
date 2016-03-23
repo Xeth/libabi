@@ -20,6 +20,8 @@ class Arguments
 {
     public:
 
+        Arguments();
+
         void add(bool);
         void add(const uint256_t &);
         void add(const int256_t &);
@@ -55,12 +57,20 @@ class Arguments
     private:
         void addInt(const std::string &);
         void addUInt(const std::string &);
+        void addDynamicVar(const std::string &);
+        void addFixedVar(const std::string &);
 
     private:
+        enum VariableType
+        {
+            Fixed_Type,
+            Dynamic_Type
+        };
+        typedef std::vector<std::pair<std::string, VariableType> > Container;
+    private:
         Serializer _serializer;
-        std::string _dynamic;
-        std::string _fixed;
-
+        Container _args;
+        size_t _dynamicOffset;
 };
 
 #define DYNAMIC(data, size) (data, size)
@@ -70,7 +80,7 @@ class Arguments
 #define PARSE_ARGUMENTS_SEQ_ITEM(r, data, x) BOOST_PP_IF(BOOST_PP_IS_BEGIN_PARENS(x), x, ESCAPE_ARG(x))
 #define ARGUMENTS_FROM_SEQ(SEQ) BOOST_PP_SEQ_FOR_EACH(PARSE_ARGUMENTS_SEQ_ITEM, ~, SEQ)
 
-#define ARGUMENTS(...) Ethereum::ABI::Arguments() ARGUMENTS_FROM_SEQ(BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))
+#define ARGUMENTS(...) Arguments() ARGUMENTS_FROM_SEQ(BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))
 
 
 

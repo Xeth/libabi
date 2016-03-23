@@ -24,9 +24,13 @@ class Reflection
 
         std::string execute(const char *, const Arguments &);
         std::string execute(const std::string &, const Arguments &);
-
         std::string execute(const char *from, const char *name, const Arguments &);
         std::string execute(const std::string &from, const std::string &name, const Arguments &);
+
+        std::string execute(const char *, const Arguments &, const uint256_t &gas);
+        std::string execute(const std::string &, const Arguments &, const uint256_t &gas);
+        std::string execute(const char *from, const char *name, const Arguments &, const uint256_t &gas);
+        std::string execute(const std::string &from, const std::string &name, const Arguments &, const uint256_t &gas);
 
     private:
         std::string _address;

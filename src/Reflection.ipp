@@ -72,4 +72,32 @@ std::string Reflection<Invoker>::execute(const std::string &from, const std::str
 }
 
 
+template<class Invoker>
+std::string Reflection<Invoker>::execute(const char *method, const Arguments &args, const uint256_t &gas)
+{
+    return _invoker.execute(_address, Method::Encode(method, args), gas);
+}
+
+
+template<class Invoker>
+std::string Reflection<Invoker>::execute(const std::string &method, const Arguments &args, const uint256_t &gas)
+{
+    return _invoker.execute(_address, Method::Encode(method, args), gas);
+}
+
+
+template<class Invoker>
+std::string Reflection<Invoker>::execute(const char *from, const char *method, const Arguments &args, const uint256_t &gas)
+{
+    return _invoker.execute(from, _address, Method::Encode(method, args), gas);
+}
+
+
+template<class Invoker>
+std::string Reflection<Invoker>::execute(const std::string &from, const std::string &method, const Arguments &args, const uint256_t &gas)
+{
+    return _invoker.execute(from, _address, Method::Encode(method, args), gas);
+}
+
+
 }}

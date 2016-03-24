@@ -20,6 +20,7 @@ class Result
         uint256_t toUint() const;
         int256_t toInt() const;
         decimal_t toDecimal() const;
+        bool toBool() const;
 
     private:
         std::string _value;

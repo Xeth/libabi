@@ -111,6 +111,19 @@ int256_t Decoder::parseInt(const int256_t &input) const
 }
 
 
+bool Decoder::decodeBool(const std::string &input) const
+{
+    return decodeBool(input.data(), input.size());
+}
+
+
+bool Decoder::decodeBool(const char *input, size_t size) const
+{
+    uint256_t val = decodeUint(input, size);
+    return val>0;
+}
+
+
 decimal_t Decoder::parseDecimal(const decimal_t &input) const
 {
     decimal_t result = input / pow(decimal_t(2), 128);

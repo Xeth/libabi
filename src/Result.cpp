@@ -20,6 +20,11 @@ std::string Result::toString() const
 }
 
 
+bool Result::toBool() const
+{
+    return _decoder.decodeBool(_value);
+}
+
 uint256_t Result::toUint() const
 {
     return _decoder.decodeUint(_value);

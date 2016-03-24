@@ -100,4 +100,16 @@ std::string Reflection<Invoker>::execute(const std::string &from, const std::str
 }
 
 
+template<class Invoker>
+Invoker & Reflection<Invoker>::getInvoker()
+{
+    return _invoker;
+}
+
+template<class Invoker>
+const std::string & Reflection<Invoker>::getAddress()
+{
+    return _address;
+}
+
 }}

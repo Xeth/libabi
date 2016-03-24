@@ -32,6 +32,9 @@ class Reflection
         std::string execute(const char *from, const char *name, const Arguments &, const uint256_t &gas);
         std::string execute(const std::string &from, const std::string &name, const Arguments &, const uint256_t &gas);
 
+        Invoker & getInvoker();
+        const std::string & getAddress() const;
+
     private:
         std::string _address;
         Invoker _invoker;

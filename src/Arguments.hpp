@@ -87,7 +87,7 @@ class Arguments
 
 }}
 
-#define CONTRACT_AGUMENTS Ethereum::ABI::ARGUMENTS
+#define CONTRACT_ARGUMENTS Ethereum::ABI::ARGUMENTS
 
 #include "Arguments.ipp"
 

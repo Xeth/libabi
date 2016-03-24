@@ -107,7 +107,7 @@ Invoker & Reflection<Invoker>::getInvoker()
 }
 
 template<class Invoker>
-const std::string & Reflection<Invoker>::getAddress()
+const std::string & Reflection<Invoker>::getAddress() const
 {
     return _address;
 }

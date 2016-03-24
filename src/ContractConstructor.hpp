@@ -11,7 +11,7 @@ class ContractConstructor
     public:
         static std::string Encode(const char *code);
         static std::string Encode(const char *code, const Arguments &args);
-        static std::string Encode(const std::string &code);
+        static const std::string & Encode(const std::string &code);
         static std::string Encode(const std::string &code, const Arguments &args);
 };
 

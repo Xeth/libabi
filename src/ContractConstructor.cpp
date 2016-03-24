@@ -16,7 +16,7 @@ std::string ContractConstructor::Encode(const char *code, const Arguments &args)
     return result;
 }
 
-std::string ContractConstructor::Encode(const std::string &code)
+const std::string & ContractConstructor::Encode(const std::string &code)
 {
     return code;
 }

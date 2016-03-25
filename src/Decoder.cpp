@@ -45,14 +45,14 @@ std::string Decoder::decodeString(const char *input, size_t size) const
 {
     if(size < 64)
     {
-        throw std::runtime_error("invalid string data");
+        return "";
     }
 
     uint256_t strSize = decodeUint(input, 64);
 
     if((size - 64) < strSize)
     {
-        throw std::runtime_error("buffer overlflow");
+        return "";
     }
 
     input+=64;

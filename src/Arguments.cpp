@@ -20,6 +20,17 @@ Arguments & Arguments::operator()(const unsigned char *data, size_t size, const 
     return *this;
 }
 
+Arguments & Arguments::operator()(const std::string &address, const AddressArgumentTag &)
+{
+    addAddress(address);
+    return *this;
+}
+
+Arguments & Arguments::operator()(const char *address, size_t size, const AddressArgumentTag &)
+{
+    addAddress(address, size);
+    return *this;
+}
 
 void Arguments::add(bool val)
 {
@@ -64,6 +75,18 @@ void Arguments::add(const unsigned char *val, size_t size)
 void Arguments::addFixed(const unsigned char *val, size_t size)
 {
     addFixedVar(_serializer.serializeFixedData(val, size));
+}
+
+
+void Arguments::addAddress(const std::string &address)
+{
+    addAddress(address.data(), address.size());
+}
+
+
+void Arguments::addAddress(const char *val, size_t size)
+{
+    addFixedVar(_serializer.serializeAddress(val, size));
 }
 
 

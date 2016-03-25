@@ -10,10 +10,24 @@
 
 #include "Serializer.hpp"
 
-
 namespace Ethereum{namespace ABI{
 
 class FixedArgumentTag{};
+class AddressArgumentTag{};
+
+}}
+
+#define ABI_DYNAMIC(data, size) (data, size)
+#define ABI_FIXED(data, size) (data, size, ::Ethereum::ABI::FixedArgumentTag())
+#define ABI_ADDRESS(data) (data , ::Ethereum::ABI::AddressArgumentTag())
+
+#define ABI_ESCAPE_ARG(x) ( x )
+#define ABI_PARSE_ARGUMENTS_SEQ_ITEM(r, data, x) BOOST_PP_IF(BOOST_PP_IS_BEGIN_PARENS(x), x, ABI_ESCAPE_ARG(x))
+#define ABI_ARGUMENTS_FROM_SEQ(SEQ) BOOST_PP_SEQ_FOR_EACH(ABI_PARSE_ARGUMENTS_SEQ_ITEM, ~, SEQ)
+
+#define CONTRACT_ARGUMENTS(...) ::Ethereum::ABI::Arguments() ABI_ARGUMENTS_FROM_SEQ(BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))
+
+namespace Ethereum{namespace ABI{
 
 
 class Arguments
@@ -35,6 +49,8 @@ class Arguments
 
         Arguments & operator()(const unsigned char *, size_t);
         Arguments & operator()(const unsigned char *, size_t, const FixedArgumentTag &);
+        Arguments & operator()(const std::string &, const AddressArgumentTag &);
+        Arguments & operator()(const char *, size_t, const AddressArgumentTag &);
 
         template<size_t size>
         void add(const boost::array<unsigned char, size> &);
@@ -50,6 +66,8 @@ class Arguments
         void add(const std::vector<std::string> &);
 
         void addFixed(const unsigned char *, size_t);
+        void addAddress(const std::string &);
+        void addAddress(const char *, size_t);
 
         std::string toHex() const;
         void reset();
@@ -73,21 +91,14 @@ class Arguments
         size_t _dynamicOffset;
 };
 
-#define DYNAMIC(data, size) (data, size)
-#define FIXED(data, size) (data, size, FixedArgumentTag())
-
-#define ESCAPE_ARG(x) ( x )
-#define PARSE_ARGUMENTS_SEQ_ITEM(r, data, x) BOOST_PP_IF(BOOST_PP_IS_BEGIN_PARENS(x), x, ESCAPE_ARG(x))
-#define ARGUMENTS_FROM_SEQ(SEQ) BOOST_PP_SEQ_FOR_EACH(PARSE_ARGUMENTS_SEQ_ITEM, ~, SEQ)
-
-#define ARGUMENTS(...) Arguments() ARGUMENTS_FROM_SEQ(BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))
-
-
+#define DYNAMIC ABI_DYNAMIC
+#define FIXED ABI_FIXED
+#define ARGUMENTS CONTRACT_ARGUMENTS
 
 
 }}
 
-#define CONTRACT_ARGUMENTS Ethereum::ABI::ARGUMENTS
+
 
 #include "Arguments.ipp"
 

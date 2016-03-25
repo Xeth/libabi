@@ -3,6 +3,38 @@
 namespace Ethereum{namespace ABI{
 
 
+std::string Decoder::decodeAddress(const std::string &input) const
+{
+    return decodeAddress(input.data(), input.size());
+}
+
+
+std::string Decoder::decodeAddress(const char *data, size_t size) const
+{
+    if(data[1]=='x'||data[1]=='x')
+    {
+        size-=2;
+        data+=2;
+    }
+
+    if(size<64)
+    {
+        return "0x0000000000000000000000000000000000000000";
+    }
+
+    size_t offset = size - 40;
+
+    std::string address;
+    address.resize(40);
+
+
+    std::copy(data+offset, data+size, address.begin());
+
+
+    return address;
+
+}
+
 std::string Decoder::decodeString(const std::string &input) const
 {
     return decodeString(input.data(), input.size());
@@ -39,7 +71,7 @@ uint256_t Decoder::decodeUint(const std::string &input) const
 {
     if(input.size() < 64)
     {
-        throw std::runtime_error("invalid string data");
+        return uint256_t(0);
     }
     return uint256_t(input);
 }
@@ -49,7 +81,7 @@ uint256_t Decoder::decodeUint(const char *input, size_t size) const
 {
     if(size < 64)
     {
-        throw std::runtime_error("invalid string data");
+        return uint256_t(0);
     }
     //ToDo: optimize, construct without another string
     return uint256_t(std::string(input, size));
@@ -60,7 +92,7 @@ int256_t Decoder::decodeInt(const std::string &input) const
 {
     if(input.size() < 64)
     {
-        throw std::runtime_error("invalid string data");
+        return int256_t(0);
     }
     return parseInt(int256_t(input));
 }
@@ -70,7 +102,7 @@ int256_t Decoder::decodeInt(const char *input, size_t size) const
 {
     if(size < 64)
     {
-        throw std::runtime_error("invalid string data");
+        return int256_t(0);
     }
     //ToDo: optimize, construct without another string
     return parseInt(int256_t(std::string(input, size)));
@@ -81,7 +113,7 @@ decimal_t Decoder::decodeDecimal(const std::string &input) const
 {
     if(input.size() < 64)
     {
-        throw std::runtime_error("invalid string data");
+        throw decimal_t(0);
     }
     return parseDecimal(decimal_t(input));
 }
@@ -91,7 +123,7 @@ decimal_t Decoder::decodeDecimal(const char *input, size_t size) const
 {
     if(size < 64)
     {
-        throw std::runtime_error("invalid string data");
+        throw decimal_t(0);
     }
     //ToDo: optimize, construct without another string
     return parseDecimal(decimal_t(std::string(input, size)));

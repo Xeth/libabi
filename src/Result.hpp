@@ -21,6 +21,7 @@ class Result
         int256_t toInt() const;
         decimal_t toDecimal() const;
         bool toBool() const;
+        std::string toAddress() const;
 
     private:
         std::string _value;

@@ -20,6 +20,11 @@ std::string Result::toString() const
 }
 
 
+std::string Result::toAddress() const
+{
+    return _decoder.decodeAddress(_value);
+}
+
 bool Result::toBool() const
 {
     return _decoder.decodeBool(_value);

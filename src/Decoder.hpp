@@ -29,6 +29,9 @@ class Decoder
         bool decodeBool(const std::string &) const;
         bool decodeBool(const char *, size_t) const;
 
+        std::string decodeAddress(const std::string &) const;
+        std::string decodeAddress(const char *, size_t ) const;
+
     private:
         void assertWordSize(size_t ) const;
         int256_t parseInt(const int256_t &) const;

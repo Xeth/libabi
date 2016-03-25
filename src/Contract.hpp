@@ -22,6 +22,7 @@ class Contract
         std::string execute(const char *);
 
         Invoker & getInvoker();
+        const Invoker & getInvoker() const;
         const std::string & getAddress() const;
 
     private:

@@ -51,6 +51,12 @@ Invoker & Contract<Invoker>::getInvoker()
 }
 
 template<class Invoker>
+const Invoker & Contract<Invoker>::getInvoker() const
+{
+    return _invoker;
+}
+
+template<class Invoker>
 const std::string & Contract<Invoker>::getAddress() const
 {
     return _address;

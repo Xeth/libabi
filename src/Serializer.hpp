@@ -20,6 +20,7 @@ class Serializer
         std::string serialize(const char *) const;
         std::string serialize(const unsigned char *, size_t) const;
         std::string serializeFixedData(const unsigned char *, size_t ) const;
+        std::string serializeAddress(const char *, size_t ) const;
 
     private:
         template<class Number>

@@ -3,6 +3,26 @@
 
 namespace Ethereum{namespace ABI{
 
+std::string Serializer::serializeAddress(const char *address, size_t size) const
+{
+    if(!size||size<2)
+    {
+        return "0000000000000000000000000000000000000000000000000000000000000000";
+    }
+
+    if(address[1]=='x'||address[1]=='X')
+    {
+        size-=2;
+        address+=2;
+    }
+
+    std::string result;
+    result.reserve(64);
+    result = "000000000000000000000000";
+    result.append(address, size);
+    return result;
+}
+
 
 std::string Serializer::serialize(const decimal_t &val) const
 {

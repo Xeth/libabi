@@ -16,8 +16,8 @@ class Contract
         Contract(const std::string &address, const Invoker &);
         Contract(const char *, const Invoker &);
 
-        Result call(const char *);
-        Result call(const char *, const Arguments &);
+        Result call(const char *) const;
+        Result call(const char *, const Arguments &) const;
         std::string execute(const char *, const Arguments &);
         std::string execute(const char *);
 

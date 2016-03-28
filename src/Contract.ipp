@@ -17,7 +17,7 @@ Contract<Invoker>::Contract(const std::string &address, const Invoker &invoker) 
 
 
 template<class Invoker>
-Result Contract<Invoker>::call(const char *method, const Arguments &args)
+Result Contract<Invoker>::call(const char *method, const Arguments &args) const
 {
     return Result(_invoker.call(_address, Method::Encode(method, args)));
 }
@@ -31,7 +31,7 @@ std::string Contract<Invoker>::execute(const char *method, const Arguments &args
 
 
 template<class Invoker>
-Result Contract<Invoker>::call(const char *method)
+Result Contract<Invoker>::call(const char *method) const
 {
     return Result(_invoker.call(_address, Method::Encode(method)));
 }

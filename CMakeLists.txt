@@ -10,4 +10,7 @@ set(CMAKE_BUILD_TYPE Release)
 endif()
 
 include(${PROJECT_SOURCE_DIR}/cmake/lib.cmake)
+
+if(ENABLE_EXAMPLES)
 include(${PROJECT_SOURCE_DIR}/cmake/examples.cmake)
+endif()

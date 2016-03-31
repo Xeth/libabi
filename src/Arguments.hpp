@@ -7,6 +7,8 @@
 #include <boost/preprocessor/control/if.hpp>
 #include <boost/preprocessor/seq/for_each.hpp>
 #include <boost/preprocessor/punctuation/is_begin_parens.hpp>
+#include <boost/preprocessor/seq/for_each_i.hpp>
+#include <boost/preprocessor/punctuation/comma_if.hpp>
 
 #include "Serializer.hpp"
 
@@ -17,8 +19,10 @@ class AddressArgumentTag{};
 
 }}
 
+#define ABI_ESCAPE_ARG_PARAM(r, data, i, Name) BOOST_PP_COMMA_IF(i) Name
+
 #define ABI_DYNAMIC(data, size) (data, size)
-#define ABI_FIXED(data, size) (data, size, ::Ethereum::ABI::FixedArgumentTag())
+#define ABI_FIXED(...) (BOOST_PP_SEQ_FOR_EACH_I(ABI_ESCAPE_ARG_PARAM,,BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__)), ::Ethereum::ABI::FixedArgumentTag())
 #define ABI_ADDRESS(data) (data , ::Ethereum::ABI::AddressArgumentTag())
 
 #define ABI_ESCAPE_ARG(x) ( x )
@@ -48,6 +52,8 @@ class Arguments
         Arguments & operator()(const T &);
 
         Arguments & operator()(const unsigned char *, size_t);
+        Arguments & operator()(const std::string &, const FixedArgumentTag &);
+        Arguments & operator()(const char *, const FixedArgumentTag &);
         Arguments & operator()(const unsigned char *, size_t, const FixedArgumentTag &);
         Arguments & operator()(const std::string &, const AddressArgumentTag &);
         Arguments & operator()(const char *, size_t, const AddressArgumentTag &);

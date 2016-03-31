@@ -14,6 +14,19 @@ Arguments & Arguments::operator()(const unsigned char *data, size_t size)
     return *this;
 }
 
+Arguments & Arguments::operator()(const std::string &data, const FixedArgumentTag &)
+{
+    addFixed((const unsigned char *)data.data(), data.size());
+    return *this;
+}
+
+
+Arguments & Arguments::operator()(const char *data, const FixedArgumentTag &)
+{
+    addFixed((const unsigned char *)data, strlen(data));
+    return *this;
+}
+
 Arguments & Arguments::operator()(const unsigned char *data, size_t size, const FixedArgumentTag &)
 {
     addFixed(data, size);

@@ -73,7 +73,7 @@ uint256_t Decoder::decodeUint(const std::string &input) const
     {
         return uint256_t(0);
     }
-    return uint256_t(input);
+    return uint256_t("0x"+input);
 }
 
 
@@ -84,7 +84,7 @@ uint256_t Decoder::decodeUint(const char *input, size_t size) const
         return uint256_t(0);
     }
     //ToDo: optimize, construct without another string
-    return uint256_t(std::string(input, size));
+    return uint256_t("0x"+std::string(input, size));
 }
 
 
@@ -94,7 +94,7 @@ int256_t Decoder::decodeInt(const std::string &input) const
     {
         return int256_t(0);
     }
-    return parseInt(int256_t(input));
+    return parseInt(int256_t("0x"+input));
 }
 
 
@@ -105,7 +105,7 @@ int256_t Decoder::decodeInt(const char *input, size_t size) const
         return int256_t(0);
     }
     //ToDo: optimize, construct without another string
-    return parseInt(int256_t(std::string(input, size)));
+    return parseInt(int256_t("0x"+std::string(input, size)));
 }
 
 
@@ -115,7 +115,7 @@ decimal_t Decoder::decodeDecimal(const std::string &input) const
     {
         throw decimal_t(0);
     }
-    return parseDecimal(decimal_t(input));
+    return parseDecimal(decimal_t("0x"+input));
 }
 
 

@@ -6,7 +6,6 @@
 #include <boost/preprocessor/variadic/to_seq.hpp>
 #include <boost/preprocessor/control/if.hpp>
 #include <boost/preprocessor/seq/for_each.hpp>
-#include <boost/preprocessor/punctuation/is_begin_parens.hpp>
 #include <boost/preprocessor/seq/for_each_i.hpp>
 #include <boost/preprocessor/punctuation/comma_if.hpp>
 
@@ -19,12 +18,15 @@ class AddressArgumentTag{};
 
 }}
 
-//#define ABI_CHECK_N(x, n, ...) n
-//#define ABI_CHECK(...) ABI_CHECK_N(__VA_ARGS__, 0,)
-//#define ABI_PROBE(x) x, 1,
-//#define ABI_IS_PAREN_PROBE(...) ABI_PROBE(~)
-//#define ABI_IS_PAREN(x) ABI_CHECK(ABI_IS_PAREN_PROBE x)
 
+#define ABI_WRAP_MACRO(define, args) define args
+#define ABI_CHECK(...) ABI_WRAP_MACRO(ABI_CHECK_N, (__VA_ARGS__, 0))
+#define ABI_CHECK_N(x, n, ...) n
+
+#define ABI_PROBE(x) x, 1,
+
+#define ABI_IS_PAREN(x) ABI_CHECK(ABI_IS_PAREN_PROBE x)
+#define ABI_IS_PAREN_PROBE(...) ABI_PROBE(~)
 
 
 #define ABI_ESCAPE_ARG_PARAM(r, data, i, Name) BOOST_PP_COMMA_IF(i) Name
@@ -34,7 +36,7 @@ class AddressArgumentTag{};
 #define ABI_ADDRESS(data) (data , ::Ethereum::ABI::AddressArgumentTag())
 
 #define ABI_ESCAPE_ARG(x) ( x )
-#define ABI_PARSE_ARGUMENTS_SEQ_ITEM(r, data, x) BOOST_PP_IF(BOOST_PP_IS_BEGIN_PARENS(x), x, ABI_ESCAPE_ARG(x))
+#define ABI_PARSE_ARGUMENTS_SEQ_ITEM(r, data, x) BOOST_PP_IF(ABI_IS_PAREN(x), x, ABI_ESCAPE_ARG(x))
 #define ABI_ARGUMENTS_FROM_SEQ(SEQ) BOOST_PP_SEQ_FOR_EACH(ABI_PARSE_ARGUMENTS_SEQ_ITEM, ~, SEQ)
 
 #define CONTRACT_ARGUMENTS(...) ::Ethereum::ABI::Arguments() ABI_ARGUMENTS_FROM_SEQ(BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))

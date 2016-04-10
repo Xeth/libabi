@@ -1,4 +1,4 @@
-find_package(Boost 1.5.7 REQUIRED)
+find_package(Boost REQUIRED)
 find_package(CryptoPP REQUIRED)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules/CopyHeaders.cmake)

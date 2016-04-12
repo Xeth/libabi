@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <cryptopp/sha3.h>
+#include "cryptopp/sha3.h"
 
 #include "Arguments.hpp"
 

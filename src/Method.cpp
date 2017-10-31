@@ -17,11 +17,11 @@ std::string Method::Encode(const std::string &name)
 std::string Method::Encode(const char *name, size_t size)
 {
     CryptoPP::SHA3_256 hash;
-    byte digest[32];
+    unsigned char digest[32];
     std::string result;
     result.reserve(10);
     result.resize(8);
-    hash.CalculateDigest( digest, (const byte*) name, size);
+    hash.CalculateDigest( digest, (const unsigned char*) name, size);
     boost::algorithm::hex(digest, digest+4, result.begin());
     result.insert(0, "0x");
     return result;

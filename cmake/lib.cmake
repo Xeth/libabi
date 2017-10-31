@@ -1,4 +1,5 @@
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules/CopyHeaders.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules/MakeIncludesLink.cmake)
+MakeIncludesLink()
 
 add_definitions(-DBOOST_PP_VARIADICS)
 
@@ -22,8 +23,6 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${CMAKE_CURRENT_BINARY_DIR}")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}")
 
 add_library(abi STATIC ${LIBRARY_SOURCES})
-
-CopyHeaders()
 
 if(NOT SKIP_LIBRARY_INSTALL)
     install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include/abi DESTINATION include OPTIONAL)
